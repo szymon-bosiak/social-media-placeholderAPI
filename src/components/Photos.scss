@@ -1,0 +1,12 @@
+.photo_container_item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .title {
+        padding-top: 1.2rem;
+        text-align: center;
+        color: white;
+    }
+}
