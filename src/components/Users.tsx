@@ -12,10 +12,9 @@ const Users = () => {
   const getData = async () => {
     try {
       setLoading(true);
-      const data = await axios
+      await axios
         .get(`${API_USERS}`)
         .then(res => {
-          console.log(res.data)
           setUsers(res.data)
         })
       setLoading(false);

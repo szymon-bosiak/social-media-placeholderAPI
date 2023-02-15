@@ -2,27 +2,29 @@ import axios from 'axios';
 import { AiOutlineUndo, AiOutlineUserAdd, AiOutlineUserDelete } from 'react-icons/ai';
 import React, { useEffect, useState } from 'react'
 import { API_DELETE_PROFILE, API_PROFILE } from '../API';
-import { AddressInformation, CompanyInformation, UserInformation, Values } from '../interfaces';
+import { AddressInformation, CompanyInformation, UserInformation } from '../interfaces';
 import './Profile.scss';
-import PopupCreate from './PopupCreate';
+import PopupCreate from './ProfileComponents/PopupCreate';
+import PopupUpdate from './ProfileComponents/PopupUpdate';
+import MyPosts from './ProfileComponents/MyPosts';
 
 const Profile = () => {
 
-  const [users, setUsers] = useState([]);
+  const [profile, setProfile] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isOpenCreate, setIsOpenCreate] = useState(false);
-
+  const [isOpenUpdate, setIsOpenUpdate] = useState(false);
 
   const getData = async () => {
     try {
       setLoading(true);
-      const data = await axios
+      await axios
         .get(`${API_PROFILE}`)
         .then(res => {
-          console.log(res.data)
-          setUsers(res.data)
+          setProfile(res.data)
         })
       setLoading(false);
+      
     } catch (error) {
       setLoading(false);
       console.error(error);
@@ -48,15 +50,20 @@ const Profile = () => {
     setIsOpenCreate(!isOpenCreate)
   }
 
-  return (
+  const togglePopupUpdate = () => {
+    setIsOpenUpdate(!isOpenUpdate)
+    setProfile(profile)
+  }
+
+  return ( 
     <div>
       {loading ? <p>Loading...</p> : <></>}
-      {users.map((user: UserInformation) => {
+      {profile.map((user: UserInformation) => {
         const { id, name, username, email, phone, website, address, company } = user;
         return (
-          <>
-            <div className="profile_container">
-              <div key={id}
+          <div key={`${Math.random() * 1000}`}>
+            <div className="profile_container" >
+              <div
                 className="item_container users_container">
 
                 <div className="user">
@@ -119,7 +126,7 @@ const Profile = () => {
                 </div>
 
                 <div className="update">
-                  <button>
+                  <button onClick={togglePopupUpdate}>
                     <i className='btn_icon'>
                       < AiOutlineUndo />
                     </i>
@@ -137,17 +144,20 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-
-            {isOpenCreate && <PopupCreate
-              handleCloseCreate={togglePopupCreate}
-            />}
-
-            
-
-
-          </>
+          </div>
         );
       })}
+
+      {isOpenCreate && <PopupCreate
+        handleCloseCreate={togglePopupCreate}
+      />}
+
+      {isOpenUpdate && <PopupUpdate
+        handleCloseUpdate={togglePopupUpdate}
+        profile={profile} />}
+
+      <MyPosts />
+
     </div>
   )
 }

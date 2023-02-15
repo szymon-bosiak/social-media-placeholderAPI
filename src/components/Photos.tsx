@@ -12,10 +12,9 @@ const Photos = () => {
   const getData = async () => {
     try {
       setLoading(true);
-      const data = await axios
+      await axios
       .get(`${API_PHOTOS}`)
       .then(res => {
-        console.log(res.data)
         setPhotos(res.data)
       })
       setLoading(false);
@@ -34,7 +33,7 @@ const Photos = () => {
     <>
       {loading ? <p>Loading...</p> : <></>}
       {photos.map((photo: PhotoInformation) => {
-          const { id, thumbnailUrl, title, albumId } = photo;
+          const { id, thumbnailUrl, title } = photo;
           return (
             <div key={id}
               className="item_container photo_container">

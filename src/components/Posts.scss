@@ -1,3 +1,14 @@
+.my_posts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.my_posts-header {
+    font-size: 24px;
+    margin: 2rem 0 1rem;
+}
 
 .title {
     font-size: 17px;

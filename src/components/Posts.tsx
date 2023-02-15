@@ -12,10 +12,9 @@ const Posts = () => {
   const getData = async () => {
     try {
       setLoading(true);
-      const data = await axios
+      await axios
         .get(`${API_POSTS}`)
         .then(res => {
-          console.log(res.data)
           setPosts(res.data)
         })
       setLoading(false);
@@ -33,7 +32,7 @@ const Posts = () => {
     <>
       {loading ? <p>Loading...</p> : <></>}
       {posts.map((post: PostInformation) => {
-          const { id, body, title, userId } = post;
+          const { id, body, title } = post;
           return (
             <div key={id}
               className="item_container post_container">

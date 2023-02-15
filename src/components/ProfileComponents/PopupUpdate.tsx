@@ -1,19 +1,31 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
-import { Values } from '../interfaces';
+import { Values } from '../../interfaces';
 import './Popup.scss';
 import { CgCloseO } from 'react-icons/cg';
+import { API_DELETE_PROFILE } from '../../API';
 
+const PopupUpdate = (props: any) => {
 
-const PopupCreate = (props: any) => {
+    const { register, handleSubmit, formState: { errors } } = useForm<Values>({
+        defaultValues: {
+            name: (props.profile[0].name),
+            username: (props.profile[0].username),
+            email: (props.profile[0].email),
+            phone: (props.profile[0].phone),
+            website: (props.profile[0].website),
+            city: (props.profile[0].address.city),
+            street: (props.profile[0].address.street),
+            suite: (props.profile[0].address.suite),
+            zipcode: (props.profile[0].address.zipcode),
+            bs: (props.profile[0].company.bs),
+            catchPhrase: (props.profile[0].company.catchPhrase),
+        }
+    });
 
-    const { register, handleSubmit, formState: { errors } } = useForm<Values>();
-
-    const onSubmitCreate = handleSubmit((data) => {
-        console.log(data.name);
-
-        fetch('https://jsonplaceholder.typicode.com/users', {
-            method: 'POST',
+    const onSubmitUpdate = handleSubmit((data) => {
+        fetch(`${API_DELETE_PROFILE}`, {
+            method: 'PUT',
             body: JSON.stringify({
                 name: (data.name),
                 username: (data.username),
@@ -34,27 +46,27 @@ const PopupCreate = (props: any) => {
             .then((response) => response.json())
             .then((json) => console.log(json));
 
-        props.handleCloseCreate()
-
+        props.handleCloseUpdate()
         setTimeout(() => {
-            alert('User created successfully.')
+            alert('User information updated successfully.')
         }, 500)
     })
 
   return (
-    <div className='popup'>
-        <div className="popup-inner">
-              <button className='close_btn' onClick={props.handleCloseCreate}><CgCloseO /></button>
+      <div className='popup'>
             
+          <div className="popup-inner">
+              <button className='close_btn' onClick={props.handleCloseUpdate}><CgCloseO /></button>
+                {/* <p>{users}</p> */}
               <div className="user_form">
-                  <form onSubmit={onSubmitCreate}>
+                  <form onSubmit={onSubmitUpdate}>
                       <input type="text" placeholder="Name" {...register("name", {
                           required: "This field must be filled in!", minLength: {
                               value: 3,
                               message: 'This field must contain at least 3 characters.'
                           }, maxLength: {
-                              value: 16,
-                              message: 'This field can contain up to 16 characters.'
+                              value: 26,
+                              message: 'This field can contain up to 26 characters.'
                           },
                       })} />
                       <p className='error_msg'>{errors.name?.message}</p>
@@ -73,7 +85,7 @@ const PopupCreate = (props: any) => {
                       <input type="email" placeholder="Email" {...register("email", {
                           required: "This field must be filled in!", max: 40, min: 5, maxLength: 40,
                           pattern: {
-                              value: /[\w-\.]+@([\w-]+\.)+[\w-]{2,4}/i,
+                              value: /[\w-.]+@([\w-]+\.)+[\w-]{2,4}/i,
                               message: "Invalid email address."
                           }
                       })} />
@@ -167,13 +179,13 @@ const PopupCreate = (props: any) => {
                       })} />
                       <p className='error_msg'>{errors.catchPhrase?.message}</p>
 
-                      <button type="submit" className='submit_btn'>Create new user</button>
+                      <button type="submit" className='submit_btn'>Update user information</button>
                   </form>
               </div>
 
-        </div>
-    </div>
+          </div>
+      </div>
   )
 }
 
-export default PopupCreate
+export default PopupUpdate
