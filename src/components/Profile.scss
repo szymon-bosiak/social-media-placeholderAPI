@@ -1,0 +1,41 @@
+.profile_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+
+    .btn_icon {
+        font-size: 18px;
+        margin-left: .4rem;
+    }
+
+    .btn_txt {
+        padding: 0;
+        margin-left: .5rem;
+        text-align: left;
+        font-size: 12px;
+        width: 6rem;
+    }
+
+    button {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 8.5rem;
+        height: 3rem;
+        margin-bottom: 1rem;
+        border-radius: .5rem;
+        border: none;
+        transition: .2s ease-in-out;
+
+        &:hover {
+            color: var(--dark-blue);
+            background-color: var(--accent-color);
+        }
+    }
+}

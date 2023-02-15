@@ -5,8 +5,8 @@ export interface UserInformation {
     email: string;
     phone: number;
     website: string;
-    address:string;
-    company: string;
+    address: AddressInformation;
+    company: CompanyInformation;
 }
 
 export interface PostInformation {
@@ -23,4 +23,29 @@ export interface PhotoInformation {
     albumId: number;
 }
 
-//export type ProductsShowcase = ProductsInformations[];
+export interface AddressInformation {
+    city: string;
+    street: string;
+    suite: number;
+    zipcode: string;
+}
+
+export interface CompanyInformation {
+    bs: string; 
+    catchPhrase: string;
+    name: string;
+}
+
+export interface Values {
+    name: string;
+    username: string;
+    email: string;
+    phone: string;
+    website: string;
+    city: string;
+    street: string;
+    suite: string;
+    zipcode: string;
+    bs: string;
+    catchPhrase: string;
+}

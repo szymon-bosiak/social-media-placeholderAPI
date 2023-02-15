@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { API_USERS } from '../API';
-import { UserInformation } from '../interfaces';
+import { AddressInformation, CompanyInformation, UserInformation } from '../interfaces';
 import './Users.scss';
 
 const Users = () => {
@@ -57,7 +57,7 @@ const Users = () => {
               </div>
 
               <div className='address'>
-                {[address].map((addressDetails: any) => {
+                {[address].map((addressDetails: AddressInformation) => {
                   const { city, street, suite, zipcode } = addressDetails;
                   return (
                     <div key={zipcode}>
@@ -72,7 +72,7 @@ const Users = () => {
               </div>
 
               <div className='company'>
-                {[company].map((companyDetails: any) => {
+                {[company].map((companyDetails: CompanyInformation) => {
                   const { bs, catchPhrase, name } = companyDetails;
                   return (
                     <div key={name}>
